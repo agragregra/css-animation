@@ -1,17 +1,17 @@
-var gulp           = require('gulp'),
-		sass           = require('gulp-sass'),
-		browserSync    = require('browser-sync'),
-		concat         = require('gulp-concat'),
-		uglify         = require('gulp-uglify'),
-		cleanCSS       = require('gulp-clean-css'),
-		rename         = require('gulp-rename'),
-		del            = require('del'),
-		imagemin       = require('gulp-imagemin'),
-		cache          = require('gulp-cache'),
-		autoprefixer   = require('gulp-autoprefixer'),
-		ftp            = require('vinyl-ftp'),
-		notify         = require("gulp-notify"),
-		rsync          = require('gulp-rsync');
+var gulp         = require('gulp'),
+		sass         = require('gulp-sass')(require('sass')),
+		browserSync  = require('browser-sync'),
+		concat       = require('gulp-concat'),
+		uglify       = require('gulp-uglify'),
+		cleanCSS     = require('gulp-clean-css'),
+		rename       = require('gulp-rename'),
+		del          = require('del'),
+		imagemin     = require('gulp-imagemin'),
+		cache        = require('gulp-cache'),
+		autoprefixer = require('gulp-autoprefixer'),
+		ftp          = require('vinyl-ftp'),
+		notify       = require("gulp-notify"),
+		rsync        = require('gulp-rsync');
 
 function browsersync() {
 	browserSync({
@@ -48,7 +48,7 @@ function otherJs() {
 
 function styles() {
 	return gulp.src('app/sass/**/*.sass')
-	.pipe(sass({outputStyle: 'expand'}).on("error", notify.onError()))
+	.pipe(sass({outputStyle: 'expanded'}).on("error", notify.onError()))
 	.pipe(rename({suffix: '.min', prefix : ''}))
 	.pipe(autoprefixer(['last 15 versions']))
 	.pipe(cleanCSS()) // Опционально, закомментировать при отладке

@@ -1,3 +1,5 @@
+@use 'sass:math'
+	
 @import "fonts"
 @import "libs"
 @import "vars"
@@ -62,8 +64,8 @@ body
 	position: absolute
 	left: 50%
 	top: 50%
-	margin-top: -$box_h/2
-	margin-left: -$box_h/2
+	margin-top: math.div(-$box-h, 2)
+	margin-left: math.div(-$box-h, 2)
 	&::after
 		position: relative
 		content: ''

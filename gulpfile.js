@@ -6,7 +6,7 @@ var gulp         = require('gulp'),
 		cleanCSS     = require('gulp-clean-css'),
 		rename       = require('gulp-rename'),
 		del          = require('del'),
-		imagemin     = require('gulp-imagemin'),
+		imagecomp    = require("compress-images"),
 		cache        = require('gulp-cache'),
 		autoprefixer = require('gulp-autoprefixer'),
 		ftp          = require('vinyl-ftp'),
@@ -56,10 +56,21 @@ function styles() {
 	.pipe(browserSync.reload({stream: true}))
 };
 
-function imageMin() {
-	return gulp.src('app/img/**/*')
-	.pipe(cache(imagemin()))
-	.pipe(gulp.dest('dist/img'))
+async function imageMin() {
+	imagecomp(
+		"app/img/**/*",
+		"dist/img/",
+		{ compress_force: false, statistic: true, autoupdate: true }, false,
+		{ jpg: { engine: "mozjpeg", command: ["-quality", "75"] } },
+		{ png: { engine: "pngquant", command: ["--quality=75", "-o"] } },
+		{ svg: { engine: "svgo", command: "--multipass" } },
+		{ gif: { engine: "gifsicle", command: ["--colors", "64", "--use-col=web"] } },
+		function (err, completed) {
+			if (completed === true) {
+				browserSync.reload()
+			}
+		}
+	)
 }
 
 function buildAll() {

@@ -24,7 +24,7 @@
     "gulp-sass": "^5.0.0",
     "gulp-uglify": "^3.0.2",
     "pngquant-bin": "^6.0.0",
-    "sass": "^1.38.0",
+    "sass": "^1.42.1",
     "vinyl-ftp": "^0.6.1"
   }
 }

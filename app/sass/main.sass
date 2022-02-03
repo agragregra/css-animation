@@ -1,5 +1,6 @@
 @use 'sass:math'
-	
+@use 'sass:color'
+
 @import "fonts"
 @import "libs"
 @import "vars"
@@ -43,16 +44,21 @@ body
 	font-size: 16px
 	min-width: 320px
 	position: relative
-	line-height: 1.75
+	line-height: 1.65
 	font-family: $default-font
 	overflow-x: hidden
-	opacity: 1
 
 .img-responsive
 	display: block
 	max-width: 100%
 	height: auto
 
+.text-center
+	text-align: center
+
+::selection
+	background-color: $accent
+	color: #fff
 
 // Урок Animation CSS НАЧАЛО
 
@@ -189,6 +195,5 @@ body
 	animation: animatedot $duration infinite normal
 
 // Урок Animation CSS КОНЕЦ
-
 
 @import "media" // Всегда в конце

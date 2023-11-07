@@ -3,7 +3,7 @@ const { gulp, src, dest, parallel, series, watch } = pkg
 
 import browserSync   from 'browser-sync'
 import gulpSass      from 'gulp-sass'
-import dartSass      from 'sass'
+import * as dartSass from 'sass'
 import postCss       from 'gulp-postcss'
 import cssnano       from 'cssnano'
 const  sassfn        = gulpSass(dartSass)
@@ -16,7 +16,7 @@ import imageminfn    from 'gulp-imagemin'
 import cache         from 'gulp-cache'
 import autoprefixer  from 'autoprefixer'
 import ftp           from 'vinyl-ftp'
-import rsyncfn       from 'gulp-rsync'
+import rsyncModule   from 'gulp-rsync'
 
 function browsersync() {
 	browserSync.init({
@@ -89,13 +89,13 @@ function deploy() {
 
 function rsync() {
 	return src('dist/')
-		.pipe(rsyncfn({
+		.pipe(rsyncModule({
 			root: 'dist/',
 			hostname: 'username@yousite.com',
 			destination: 'yousite/public_html/',
 			clean: true, // Mirror copy with file deletion
-			include: [/* '*.htaccess' */], // Included files to deploy,
-			exclude: [ '**/Thumbs.db', '**/*.DS_Store' ],
+			// include: ['*.htaccess'], // Includes files to deploy
+			exclude: ['**/Thumbs.db', '**/*.DS_Store'], // Excludes files from deploy
 			recursive: true,
 			archive: true,
 			silent: false,
@@ -104,12 +104,12 @@ function rsync() {
 }
 
 function startwatch() {
-	watch('app/sass/**/*.sass', { usePolling: true }, sass)
+	watch(['app/sass/**/*.sass'], { usePolling: true }, sass)
 	watch(['libs/**/*.js', 'app/js/common.js'], { usePolling: true }, js)
 	watch(['app/*.html'], { usePolling: true }).on('change', browserSync.reload)
 }
 
-export { js, sass, imagemin, deploy, rsync, clearcache }
+export { js, sass, imagemin, deploy, rsync, removedist, clearcache }
 export let build = series(removedist, imagemin, js, sass, buildcopy)
 
 export default series(js, sass, parallel(browsersync, startwatch))

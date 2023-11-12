@@ -1,5 +1,5 @@
 import pkg from 'gulp'
-const { gulp, src, dest, parallel, series, watch } = pkg
+const { src, dest, parallel, series, watch } = pkg
 
 import browserSync   from 'browser-sync'
 import gulpSass      from 'gulp-sass'

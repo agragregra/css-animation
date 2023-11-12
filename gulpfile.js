@@ -6,7 +6,7 @@ import gulpSass      from 'gulp-sass'
 import * as dartSass from 'sass'
 import postCss       from 'gulp-postcss'
 import cssnano       from 'cssnano'
-const  sassfn        = gulpSass(dartSass)
+const  sassModule    = gulpSass(dartSass)
 import concat        from 'gulp-concat'
 import uglifyim      from 'gulp-uglify-es'
 const  uglify        = uglifyim.default
@@ -43,7 +43,7 @@ function js() {
 
 function sass() {
 	return src('app/sass/**/*.sass')
-	.pipe(sassfn())
+	.pipe(sassModule())
 	.pipe(postCss([
 		autoprefixer({ grid: 'autoplace' }),
 		cssnano({ preset: ['default', { discardComments: { removeAll: true } }] })
